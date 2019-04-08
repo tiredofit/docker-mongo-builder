@@ -18,10 +18,10 @@ To utilize, take advantage of Docker's Multistage build process as follows:
 ```bash
 FROM tiredofit/mongo-builder as mongo-packages
 FROM tiredofit/alpine:edge
-COPY --from=mongo-packages /home/builder/packages/non-free/x86_64/ /usr/src/apk
+COPY --from=mongo-packages / /usr/src/apk
 
 RUN apk update && \
     cd /usr/src/apk && \
-    apk add <yourpackagename>.apk
+    apk add --allow-untrusted <yourpackagename>.apk
     ... the rest of your Docker Build
 ```
