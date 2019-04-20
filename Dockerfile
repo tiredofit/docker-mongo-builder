@@ -32,23 +32,35 @@ RUN set -x && \
     sudo -u builder echo "non-free/wiredtiger/*" >> .git/info/sparse-checkout && \
     sudo -u builder git pull --depth=1 origin master && \
     \
-    cd non-free && \
+    cd non-free
     ## Build Tools
+    ## Split into seperate RUN steps for the time being to solve compiler related issues and faster debugging. 
+RUN cd /usr/src/aports/non-free && \
     cd mongodb && \
-    sudo -u builder abuild -r && \
-    cd ../mongodb-tools && \
-    sudo -u builder abuild -r && \
-    cd ../mongo-c-driver && \
-    sudo -u builder abuild -r && \
-    cd ../php7-pecl-mongodb && \
-    sudo -u builder abuild -r && \
-    cd ../py-flask-mongoengine && \
-    sudo -u builder abuild -r && \
-    cd ../py-flask-pymongo && \
-    sudo -u builder abuild -r && \
-    cd ../py-flask-views && \
-    sudo -u builder abuild -r && \
-    cd ../wiredtiger && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd mongodb-tools && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd mongo-c-driver && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd php7-pecl-mongodb && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd py-mongo && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd py-flask-mongoengine && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd py-flask-pymongo && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd py-flask-views && \
+    sudo -u builder abuild -r
+RUN cd /usr/src/aports/non-free/ && \
+    cd wiredtiger && \
     sudo -u builder abuild -r
 
 FROM scratch
